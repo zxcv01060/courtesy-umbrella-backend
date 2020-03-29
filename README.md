@@ -35,7 +35,7 @@
     * 請至./src/main/resources下複製application-server.yml，並重新貼上 ，更改檔名為application-local.yml
     * 修改application-local.yml的內容以符合您個人的喜好
     
-4. 設定資料庫連線的環境變數(以下變數值皆為測試機數值，可將其改為本機的數值)
+4. 設定資料庫連線的環境變數(請將{IP}、{PORT}、{username}、{password}修改成本機資料庫連線資訊，若需測試機資訊，請找負責人員索取)
 
 | 變數名稱 | 變數值 | 備註 |
 |---------|--------|-----|
