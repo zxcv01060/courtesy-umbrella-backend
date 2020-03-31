@@ -79,6 +79,10 @@ public abstract class BaseViewServiceImpl<D extends BaseViewDAO<ID, E>, ID, E, B
         return optional.map(beanEntityTransformer::toBean);
     }
 
+    protected BeanEntityTransformer<E, B> getBeanEntityTransformer() {
+        return beanEntityTransformer;
+    }
+
     public interface BeanEntityTransformer<E, B> {
         @Nonnull
         E toEntity(@Nonnull B b);
