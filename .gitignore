@@ -266,3 +266,4 @@ HELP.md
 /database-config/.gradle
 /config/.gradle
 /database-config/src/generated/
+sharing_economy.db
