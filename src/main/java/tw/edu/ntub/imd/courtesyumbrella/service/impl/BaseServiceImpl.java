@@ -15,12 +15,12 @@ public abstract class BaseServiceImpl<D extends BaseDAO<ID, E>, ID, E, B extends
 
     @Transactional
     @Override
-    public void update(ID id, B bean) {
+    public void update(ID id, B b) {
         try {
             Optional<E> optional = baseDAO.getById(id);
             if (optional.isPresent()) {
                 E entity = optional.get();
-                BeanUtils.copy(bean, entity);
+                BeanUtils.copy(b, entity);
                 baseDAO.update(entity);
             } else {
                 throw new Exception("找不到資料, id = " + id);
