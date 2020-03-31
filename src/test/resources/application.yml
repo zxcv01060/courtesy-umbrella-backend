@@ -1,0 +1,38 @@
+spring:
+  main:
+    banner-mode: off
+    allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:sqlite:sharing_economy.db
+    driver-class-name: org.sqlite.JDBC
+    initialization-mode: always
+  jpa:
+    database-platform: org.hibernate.dialect.SQLiteDialect
+    open-in-view: true
+    show-sql: false
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: ${spring.jpa.database-platform}
+        hbm2ddl:
+          auto: create
+        show_sql: false
+        format_sql: false
+  test:
+    database:
+      replace: none
+server:
+  ip: 140.131.115.156
+  port: 0
+  servlet:
+    context-path: /
+  image:
+    name: image
+    url: http://${server.ip}:${server.port}${server.context-path}${server.image.name}
+    path: D:${file.separator}NTUB${file.separator}IndependentStudy${file.separator}ProjectUploadFile${file.separator}${server.image.name}${file.separator}
+  file:
+    name: file
+    url: http://${server.ip}:${server.port}${server.context-path}${server.file.name}
+    path: D:${file.separator}NTUB${file.separator}IndependentStudy${file.separator}ProjectUploadFile${file.separator}${server.file.name}${file.separator}
