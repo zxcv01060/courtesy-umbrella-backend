@@ -77,6 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new CustomLoginFilter(authenticationManager(), customAuthenticationSuccessHandler), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()// 設定Requests的權限需求
                 .antMatchers(HttpMethod.GET, "/", "/index", "/user/register", "/login", "/logout", "/timeout", "/error**").permitAll()
+                .antMatchers(HttpMethod.POST, "/user/register").permitAll()
                 .anyRequest()// 表示除了上述請求，都需要權限
                 .authenticated()
                 .and()
