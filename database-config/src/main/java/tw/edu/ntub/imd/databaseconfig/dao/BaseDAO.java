@@ -1,17 +1,12 @@
 package tw.edu.ntub.imd.databaseconfig.dao;
 
-import tw.edu.ntub.imd.databaseconfig.dto.Pager;
+import javax.annotation.Nonnull;
 
-import java.util.List;
+public interface BaseDAO<ID, E> extends BaseViewDAO<ID, E> {
+    @Nonnull
+    E insert(@Nonnull E e);
 
-public interface BaseDAO<E> {
-    E insert(E e);
+    void delete(@Nonnull E e);
 
-    void delete(E e);
-
-    void update(E e);
-
-    List<E> searchAll();
-
-    List<E> searchAll(Pager pager);
+    void update(@Nonnull E e);
 }

@@ -2,40 +2,32 @@ package tw.edu.ntub.imd.databaseconfig.dao.impl;
 
 import org.springframework.data.repository.NoRepositoryBean;
 import tw.edu.ntub.imd.databaseconfig.dao.BaseDAO;
-import tw.edu.ntub.imd.databaseconfig.dto.Pager;
 
+import javax.annotation.Nonnull;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.List;
 
 @NoRepositoryBean
-public class BaseDAOImpl<E> implements BaseDAO<E> {
-    @PersistenceContext
-    private EntityManager entityManager;
-
+public class BaseDAOImpl<ID, E> extends BaseViewDAOImpl<ID, E> implements BaseDAO<ID, E> {
+    @Nonnull
     @Override
-    public E insert(E e) {
+    public E insert(@Nonnull E e) {
+        EntityManager entityManager = getEntityManager();
         entityManager.persist(e);
+        entityManager.flush();
         return e;
     }
 
     @Override
-    public void delete(E e) {
+    public void delete(@Nonnull E e) {
+        EntityManager entityManager = getEntityManager();
         entityManager.remove(e);
+        entityManager.flush();
     }
 
     @Override
-    public void update(E e) {
+    public void update(@Nonnull E e) {
+        EntityManager entityManager = getEntityManager();
         entityManager.merge(e);
-    }
-
-    @Override
-    public List<E> searchAll() {
-        return null;
-    }
-
-    @Override
-    public List<E> searchAll(Pager pager) {
-        return null;
+        entityManager.flush();
     }
 }

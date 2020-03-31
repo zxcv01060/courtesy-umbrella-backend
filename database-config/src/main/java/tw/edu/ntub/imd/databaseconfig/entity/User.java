@@ -33,10 +33,14 @@ public class User {
     private LocalDateTime createDate = LocalDateTime.now();
     @Column(name = "modify_date", nullable = false)
     private LocalDateTime modifyDate = LocalDateTime.now();
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     @Setter(AccessLevel.NONE)
     private UserRole userRoleByRoleId;
+
+    public String getRoleName() {
+        return userRoleByRoleId != null ? userRoleByRoleId.getName() : null;
+    }
 
     public void setUserRoleByRoleId(UserRole userRoleByRoleId) {
         this.userRoleByRoleId = userRoleByRoleId;
