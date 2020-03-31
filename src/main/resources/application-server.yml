@@ -1,8 +1,8 @@
 server:
-  ip: 140.131.115.156
+  ip: 211.75.1.201
   image:
     name: image
-    path: D:${file.separator}NTUB${file.separator}IndependentStudy${file.separator}ProjectUploadFile${file.separator}${server.image.name}${file.separator}
+    path: C:${file.separator}UploadFile${file.separator}${server.image.name}${file.separator}
   file:
     name: file
-    path: D:${file.separator}NTUB${file.separator}IndependentStudy${file.separator}ProjectUploadFile${file.separator}${server.file.name}${file.separator}
+    path: C:${file.separator}UploadFile${file.separator}${server.file.name}${file.separator}
