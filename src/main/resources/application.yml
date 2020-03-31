@@ -4,6 +4,9 @@ spring:
     allow-bean-definition-overriding: true
   profiles:
     active: local
+  security:
+    jwt:
+      secret: $2a$10$y/KQjTKFpJsCG6wCAiEW5uFfyPotF4kLE2kOWwLSgJjjuhLJRTNZW
   datasource:
     type: com.mchange.v2.c3p0.ComboPooledDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
