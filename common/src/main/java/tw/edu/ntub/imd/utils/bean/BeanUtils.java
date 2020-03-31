@@ -28,8 +28,9 @@ public class BeanUtils {
 
     }
 
-    public static void copy(Object copyFrom, Object copyTo) throws ProjectException {
+    public static <F, T> T copy(F copyFrom, T copyTo) throws ProjectException {
         copy(new JavaBean(copyFrom), new JavaBean(copyTo));
+        return copyTo;
     }
 
     public static void copy(JavaBean source, JavaBean target) throws ProjectException {
