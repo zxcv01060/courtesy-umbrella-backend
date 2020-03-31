@@ -33,6 +33,6 @@ server:
   servlet:
     context-path: /
   image:
-    url: http://${server.ip}:${server.port}${server.context-path}image
+    url: http://${server.ip}:${server.port}${server.context-path}${server.image.name}
   file:
-    url: http://${server.ip}:${server.port}${server.context-path}file
+    url: http://${server.ip}:${server.port}${server.context-path}${server.file.name}
