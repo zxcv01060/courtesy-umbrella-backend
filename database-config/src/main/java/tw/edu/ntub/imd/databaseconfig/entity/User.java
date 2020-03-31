@@ -29,6 +29,8 @@ public class User {
     private Boolean enable = true;
     @Column(name = "email", length = 255, nullable = false)
     private String email;
+    @Column(name = "birthday", nullable = false)
+    private LocalDateTime birthday;
     @Column(name = "create_date", nullable = false)
     private LocalDateTime createDate = LocalDateTime.now();
     @Column(name = "modify_date", nullable = false)
