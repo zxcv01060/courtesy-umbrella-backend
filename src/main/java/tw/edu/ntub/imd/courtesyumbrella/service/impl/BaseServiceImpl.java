@@ -9,8 +9,8 @@ import tw.edu.ntub.imd.utils.bean.BeanUtils;
 import java.util.Optional;
 
 public abstract class BaseServiceImpl<D extends BaseDAO<ID, E>, ID, E, B extends BaseBean> extends BaseViewServiceImpl<D, ID, E, B> implements BaseService<B, ID> {
-    public BaseServiceImpl(D baseDAO, BeanEntityTransformer<E, B> beanEntityTransformer) {
-        super(baseDAO, beanEntityTransformer);
+    public BaseServiceImpl(D d, BeanEntityTransformer<E, B> beanEntityTransformer) {
+        super(d, beanEntityTransformer);
     }
 
     @Transactional
