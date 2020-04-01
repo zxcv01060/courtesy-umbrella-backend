@@ -3,6 +3,7 @@ package tw.edu.ntub.imd.courtesyumbrella.bean;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -13,7 +14,7 @@ public class UserBean extends BaseBean {
     private Integer roleId;
     private Boolean enable;
     private String email;
-    private LocalDateTime birthday;
+    private LocalDate birthday;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
 }

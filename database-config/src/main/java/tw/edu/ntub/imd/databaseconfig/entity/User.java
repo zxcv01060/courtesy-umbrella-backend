@@ -8,6 +8,7 @@ import tw.edu.ntub.imd.databaseconfig.Config;
 import tw.edu.ntub.imd.databaseconfig.converter.BooleanTo1And0Converter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -30,7 +31,7 @@ public class User {
     @Column(name = "email", length = 255, nullable = false)
     private String email;
     @Column(name = "birthday", nullable = false)
-    private LocalDateTime birthday;
+    private LocalDate birthday;
     @Column(name = "create_date", nullable = false)
     private LocalDateTime createDate = LocalDateTime.now();
     @Column(name = "modify_date", nullable = false)
