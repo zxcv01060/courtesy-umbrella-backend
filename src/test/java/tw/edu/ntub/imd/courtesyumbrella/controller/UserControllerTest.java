@@ -1,54 +1,44 @@
 package tw.edu.ntub.imd.courtesyumbrella.controller;
 
-import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.*;
-import org.springframework.test.context.jdbc.Sql;
-import tw.edu.ntub.imd.courtesyumbrella.bean.UserBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-@Sql("classpath:data.sql")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureMockMvc
 class UserControllerTest {
-    @LocalServerPort
-    private int port;
-    @Value("${server.servlet.context-path}")
-    private String contextPath;
     @Autowired
-    private TestRestTemplate restTemplate;
-    private String baseUrl;
-
-    @BeforeEach
-    public void initBaseUrl() {
-        this.baseUrl = "http://localhost:" + port + contextPath.substring(0, contextPath.length() - 1);
-    }
+    private MockMvc mockMvc;
 
     @Test
     void testRegister() throws Exception {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        UserBean userBean = new UserBean();
-        userBean.setAccount("test");
-        userBean.setPassword("hello world");
-        userBean.setEmail("10646007@ntub.edu.tw");
-        userBean.setBirthday(LocalDateTime.of(LocalDate.of(1999, 4, 3), LocalTime.MAX));
-        HttpEntity<UserBean> requestEntity = new HttpEntity<>(userBean, headers);
-        ResponseEntity<String> response = restTemplate.postForEntity(baseUrl + "/user/register", requestEntity, String.class);
-        assertSame(HttpStatus.OK, response.getStatusCode());
-        JSONObject bodyResult = new JSONObject(response.getBody());
-        assertTrue(bodyResult.getBoolean("result"));
-        assertEquals("", bodyResult.getString("errorCode"));
-        assertFalse(bodyResult.getString("message").isBlank());
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode requestBody = mapper.createObjectNode();
+        requestBody.put("account", "test");
+        requestBody.put("password", "hello world");
+        requestBody.put("email", "10646007@ntub.edu.tw");
+        requestBody.put("birthday", "1999/04/03");
+        String content = mapper.writeValueAsString(requestBody);
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/user/register")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+        mockMvc.perform(request)
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.result").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.errorCode").value(""))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").hasJsonPath())
+                .andReturn();
     }
 }
