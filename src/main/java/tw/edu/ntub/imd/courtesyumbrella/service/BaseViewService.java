@@ -11,7 +11,7 @@ public interface BaseViewService<B extends BaseBean, ID> {
 
     List<B> searchAll();
 
-    List<B> searchAllWithPage(Pager pager);
+    List<B> searchAll(Pager pager);
 
     List<B> searchByBean(B b);
 
