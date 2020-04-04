@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import tw.edu.ntub.imd.courtesyumbrella.bean.UserBean;
+import tw.edu.ntub.imd.courtesyumbrella.exception.RequiredParameterException;
 import tw.edu.ntub.imd.courtesyumbrella.service.UserService;
 import tw.edu.ntub.imd.courtesyumbrella.utils.http.ResponseEntityBuilder;
 
@@ -24,5 +25,11 @@ public class UserController {
     public ResponseEntity<String> register(@RequestBody UserBean userBean) {
         userService.create(userBean);
         return ResponseEntityBuilder.success().message("註冊成功，將重定向至登入頁面。").build();
+    }
+
+    public static class UserBeanRequiredParameterException extends RequiredParameterException {
+        public UserBeanRequiredParameterException(String requiredParameterName) {
+            super("user." + requiredParameterName);
+        }
     }
 }
