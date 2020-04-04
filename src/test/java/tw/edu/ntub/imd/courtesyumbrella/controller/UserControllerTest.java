@@ -1,44 +1,90 @@
 package tw.edu.ntub.imd.courtesyumbrella.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.json.JSONObject;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import tw.edu.ntub.imd.config.Config;
+import tw.edu.ntub.imd.courtesyumbrella.bean.UserBean;
+import tw.edu.ntub.imd.courtesyumbrella.service.UserService;
+import tw.edu.ntub.imd.courtesyumbrella.utils.http.ResponseUtils;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+@WebMvcTest(UserController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class UserControllerTest {
+    @SpringBootApplication(scanBasePackages = "tw.edu.ntub.imd.courtesyumbrella.controller")
+    @Import(Config.class)
+    static class UserControllerTestApplication {
+        @Bean
+        public ObjectMapper objectMapper() {
+            return ResponseUtils.createMapper();
+        }
+    }
+
     @Autowired
     private MockMvc mockMvc;
+    @MockBean
+    private UserService userService;
 
     @Test
+    @DisplayName("測試正常註冊功能")
     void testRegister() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode requestBody = mapper.createObjectNode();
-        requestBody.put("account", "test");
-        requestBody.put("password", "hello world");
-        requestBody.put("email", "10646007@ntub.edu.tw");
-        requestBody.put("birthday", "1999/04/03");
-        String content = mapper.writeValueAsString(requestBody);
+        UserBean userBean = new UserBean();
+        userBean.setAccount("test");
+        userBean.setPassword("hello world");
+        userBean.setEmail("10646007@ntub.edu.tw");
+        userBean.setBirthday(LocalDate.of(2020, 3, 30));
+        JSONObject userObject = new JSONObject();
+        userObject.put("account", userBean.getAccount());
+        userObject.put("password", userBean.getPassword());
+        userObject.put("email", userBean.getEmail());
+        userObject.put("birthday", userBean.getBirthday().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+        String requestBody = userObject.toString();
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/user/register")
-                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
+                .characterEncoding("UTF-8")
+                .content(requestBody);
         mockMvc.perform(request)
-                .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.result").value(true))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.errorCode").value(""))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.message").hasJsonPath())
-                .andReturn();
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").hasJsonPath());
+        Mockito.verify(userService, Mockito.times(1)).create(userBean);
+    }
+
+    @Test
+    @DisplayName("測試缺少account欄位的註冊功能")
+    void testFailRegister() throws Exception {
+        Mockito.doThrow(new UserController.UserBeanRequiredParameterException("account")).when(userService).create(new UserBean());
+        JSONObject userObject = new JSONObject();
+        String requestBody = userObject.toString();
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/user/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody);
+        mockMvc.perform(request)
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.result").value(false))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.errorCode").value("Required - user.account"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("缺少必要參數：user.account"));
     }
 }
