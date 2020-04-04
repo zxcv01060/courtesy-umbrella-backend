@@ -34,7 +34,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserDAO, String, User, User
     public void create(UserBean userBean) {
         User user = beanBeanEntityTransformer.toEntity(userBean);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDAO.insert(user);
+        userDAO.saveAndFlush(user);
     }
 
     private static class UserBeanEntityTransformer implements BeanEntityTransformer<User, UserBean> {

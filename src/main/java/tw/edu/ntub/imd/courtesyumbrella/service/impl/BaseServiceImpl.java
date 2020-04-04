@@ -17,11 +17,11 @@ public abstract class BaseServiceImpl<D extends BaseDAO<ID, E>, ID, E, B extends
     @Override
     public void update(ID id, B b) {
         try {
-            Optional<E> optional = baseDAO.getById(id);
+            Optional<E> optional = baseDAO.findById(id);
             if (optional.isPresent()) {
                 E entity = optional.get();
                 BeanUtils.copy(b, entity);
-                baseDAO.update(entity);
+                baseDAO.save(entity);
             } else {
                 throw new Exception("找不到資料, id = " + id);
             }
@@ -35,7 +35,7 @@ public abstract class BaseServiceImpl<D extends BaseDAO<ID, E>, ID, E, B extends
     @Override
     public void delete(ID id) {
         try {
-            Optional<E> optional = baseDAO.getById(id);
+            Optional<E> optional = baseDAO.findById(id);
             if (optional.isPresent()) {
                 E entity = optional.get();
                 baseDAO.delete(entity);

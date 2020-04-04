@@ -1,13 +1,12 @@
 package tw.edu.ntub.imd.databaseconfig.dao;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import javax.annotation.Nonnull;
+import java.util.Optional;
 
-public interface BaseDAO<ID, E> extends BaseViewDAO<ID, E> {
-    @SuppressWarnings("UnusedReturnValue")
+public interface BaseDAO<ID, E> extends BaseViewDAO<ID, E>, JpaRepository<E, ID> {
     @Nonnull
-    E insert(@Nonnull E e);
-
-    void delete(@Nonnull E e);
-
-    void update(@Nonnull E e);
+    @Override
+    Optional<E> findById(@Nonnull ID id);
 }
