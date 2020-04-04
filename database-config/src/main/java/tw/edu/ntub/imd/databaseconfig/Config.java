@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration("databaseConfig")
-@EnableJpaRepositories
+@EnableJpaRepositories(basePackages = "tw.edu.ntub.imd.databaseconfig.dao")
 @EnableTransactionManagement
 @EntityScan(basePackages = "tw.edu.ntub.imd.databaseconfig.entity")
 public class Config {
