@@ -24,70 +24,7 @@ public class ResponseUtils {
     private static final ObjectMapper mapper = new ObjectMapper();
 
     static {
-        SimpleModule simpleModule = new SimpleModule("DateModule", new Version(1, 0, 0, null, null, null));
-        simpleModule.addDeserializer(Date.class, new JsonDeserializer<>() {
-            @Override
-            public Date deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-                return DateUtils.parseIgnoreException(p.getValueAsString());
-            }
-        });
-        simpleModule.addDeserializer(Calendar.class, new JsonDeserializer<>() {
-            @Override
-            public Calendar deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-                return CalendarUtils.parseIgnoreException(p.getValueAsString());
-            }
-        });
-        simpleModule.addDeserializer(LocalDate.class, new JsonDeserializer<>() {
-            @Override
-            public LocalDate deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-                return LocalDateUtils.parseIgnoreException(p.getValueAsString());
-            }
-        });
-        simpleModule.addDeserializer(LocalDateUtils.LocalDateWrapper.class, new JsonDeserializer<>() {
-            @Override
-            public LocalDateUtils.LocalDateWrapper deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-                try {
-                    return new LocalDateUtils.LocalDateWrapper(LocalDateUtils.parse(p.getValueAsString()));
-                } catch (DateParseException | NullParameterException e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-        });
-        simpleModule.addDeserializer(LocalTime.class, new JsonDeserializer<>() {
-            @Override
-            public LocalTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-                return LocalTimeUtils.parseIgnoreException(p.getValueAsString());
-            }
-        });
-        simpleModule.addDeserializer(LocalTimeUtils.LocalTimeWrapper.class, new JsonDeserializer<>() {
-            @Override
-            public LocalTimeUtils.LocalTimeWrapper deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-                try {
-                    return new LocalTimeUtils.LocalTimeWrapper(LocalTimeUtils.parse(p.getValueAsString()));
-                } catch (DateParseException | NullParameterException e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-        });
-        simpleModule.addDeserializer(LocalDateTime.class, new JsonDeserializer<>() {
-            @Override
-            public LocalDateTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-                return LocalDateTimeUtils.parseIgnoreException(p.getValueAsString());
-            }
-        });
-        simpleModule.addDeserializer(LocalDateTimeUtils.LocalDateTimeWrapper.class, new JsonDeserializer<>() {
-            @Override
-            public LocalDateTimeUtils.LocalDateTimeWrapper deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-                try {
-                    return new LocalDateTimeUtils.LocalDateTimeWrapper(LocalDateTimeUtils.parse(p.getValueAsString()));
-                } catch (DateParseException | NullParameterException e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-        });
+        SimpleModule simpleModule = new DateModule();
         simpleModule.addDeserializer(Boolean.class, new JsonDeserializer<>() {
             @Override
             public Boolean deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
@@ -143,6 +80,75 @@ public class ResponseUtils {
             return mapper.readValue(unEscapeString, jsonStringClass);
         } catch (IOException e) {
             throw new UnknownException(e);
+        }
+    }
+
+    public static class DateModule extends SimpleModule {
+        public DateModule() {
+            super("DateModule", new Version(1, 0, 0, null, null, null));
+            addDeserializer(Date.class, new JsonDeserializer<>() {
+                @Override
+                public Date deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+                    return DateUtils.parseIgnoreException(p.getValueAsString());
+                }
+            });
+            addDeserializer(Calendar.class, new JsonDeserializer<>() {
+                @Override
+                public Calendar deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+                    return CalendarUtils.parseIgnoreException(p.getValueAsString());
+                }
+            });
+            addDeserializer(LocalDate.class, new JsonDeserializer<>() {
+                @Override
+                public LocalDate deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+                    return LocalDateUtils.parseIgnoreException(p.getValueAsString());
+                }
+            });
+            addDeserializer(LocalDateUtils.LocalDateWrapper.class, new JsonDeserializer<>() {
+                @Override
+                public LocalDateUtils.LocalDateWrapper deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+                    try {
+                        return new LocalDateUtils.LocalDateWrapper(LocalDateUtils.parse(p.getValueAsString()));
+                    } catch (DateParseException | NullParameterException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }
+            });
+            addDeserializer(LocalTime.class, new JsonDeserializer<>() {
+                @Override
+                public LocalTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+                    return LocalTimeUtils.parseIgnoreException(p.getValueAsString());
+                }
+            });
+            addDeserializer(LocalTimeUtils.LocalTimeWrapper.class, new JsonDeserializer<>() {
+                @Override
+                public LocalTimeUtils.LocalTimeWrapper deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+                    try {
+                        return new LocalTimeUtils.LocalTimeWrapper(LocalTimeUtils.parse(p.getValueAsString()));
+                    } catch (DateParseException | NullParameterException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }
+            });
+            addDeserializer(LocalDateTime.class, new JsonDeserializer<>() {
+                @Override
+                public LocalDateTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+                    return LocalDateTimeUtils.parseIgnoreException(p.getValueAsString());
+                }
+            });
+            addDeserializer(LocalDateTimeUtils.LocalDateTimeWrapper.class, new JsonDeserializer<>() {
+                @Override
+                public LocalDateTimeUtils.LocalDateTimeWrapper deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+                    try {
+                        return new LocalDateTimeUtils.LocalDateTimeWrapper(LocalDateTimeUtils.parse(p.getValueAsString()));
+                    } catch (DateParseException | NullParameterException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }
+            });
         }
     }
 }
