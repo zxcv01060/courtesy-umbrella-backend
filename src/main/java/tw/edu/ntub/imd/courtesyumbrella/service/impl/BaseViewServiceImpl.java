@@ -9,12 +9,13 @@ import tw.edu.ntub.imd.databaseconfig.dao.BaseViewDAO;
 import tw.edu.ntub.imd.databaseconfig.dto.Pager;
 
 import javax.annotation.Nonnull;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public abstract class BaseViewServiceImpl<D extends BaseViewDAO<ID, E>, ID, E, B extends BaseBean> implements BaseViewService<B, ID> {
+public abstract class BaseViewServiceImpl<D extends BaseViewDAO<E, ID>, E, ID extends Serializable, B extends BaseBean> implements BaseViewService<B, ID> {
     protected D baseDAO;
     private BeanEntityTransformer<E, B> beanEntityTransformer;
 

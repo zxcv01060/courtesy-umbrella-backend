@@ -6,9 +6,10 @@ import tw.edu.ntub.imd.courtesyumbrella.service.BaseService;
 import tw.edu.ntub.imd.databaseconfig.dao.BaseDAO;
 import tw.edu.ntub.imd.utils.bean.BeanUtils;
 
+import java.io.Serializable;
 import java.util.Optional;
 
-public abstract class BaseServiceImpl<D extends BaseDAO<ID, E>, ID, E, B extends BaseBean> extends BaseViewServiceImpl<D, ID, E, B> implements BaseService<B, ID> {
+public abstract class BaseServiceImpl<D extends BaseDAO<E, ID>, E, ID extends Serializable, B extends BaseBean> extends BaseViewServiceImpl<D, E, ID, B> implements BaseService<B, ID> {
     public BaseServiceImpl(D d, BeanEntityTransformer<E, B> beanEntityTransformer) {
         super(d, beanEntityTransformer);
     }
