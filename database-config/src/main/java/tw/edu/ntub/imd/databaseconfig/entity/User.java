@@ -14,9 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "user", schema = Config.DATABASE_NAME)
 @Data
-@EqualsAndHashCode(exclude = {
-        "userRoleByRoleId"
-})
+@EqualsAndHashCode(exclude = "userRoleByRoleId")
 public class User {
     @Id
     @Column(name = "account", length = 100, nullable = false)
@@ -34,6 +32,8 @@ public class User {
     private LocalDate birthday;
     @Column(name = "create_date", nullable = false)
     private LocalDateTime createDate = LocalDateTime.now();
+    @Column(name = "modify_id", length = 100, nullable = false)
+    private String modifyId;
     @Column(name = "modify_date", nullable = false)
     private LocalDateTime modifyDate = LocalDateTime.now();
     @ManyToOne
