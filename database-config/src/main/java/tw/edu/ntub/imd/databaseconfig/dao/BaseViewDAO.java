@@ -4,14 +4,17 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.QueryByExampleExecutor;
 
 import javax.annotation.Nonnull;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public interface BaseViewDAO<ID, E> extends Repository<E, ID>, QueryByExampleExecutor<E> {
+@NoRepositoryBean
+public interface BaseViewDAO<E, ID extends Serializable> extends Repository<E, ID>, QueryByExampleExecutor<E> {
     @Nonnull
     Optional<E> findById(@Nonnull ID id);
 
