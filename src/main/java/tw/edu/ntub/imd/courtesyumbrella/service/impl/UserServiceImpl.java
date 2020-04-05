@@ -24,10 +24,14 @@ public class UserServiceImpl extends BaseServiceImpl<UserDAO, User, String, User
     }
 
     @Override
-    public void create(UserBean userBean) {
+    public UserBean create(UserBean userBean) {
         User user = toEntity(userBean);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDAO.saveAndFlush(user);
+        user = userDAO.saveAndFlush(user);
+        userBean.setPassword(user.getPassword());
+        userBean.setModifyId(user.getModifyId());
+        userBean.setModifyDate(user.getModifyDate());
+        return userBean;
     }
 
     private static class UserBeanEntityTransformer implements BeanEntityTransformer<User, UserBean> {

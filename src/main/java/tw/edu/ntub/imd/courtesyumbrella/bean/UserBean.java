@@ -16,5 +16,6 @@ public class UserBean extends BaseBean {
     private String email;
     private LocalDate birthday;
     private LocalDateTime createDate;
+    private String modifyId;
     private LocalDateTime modifyDate;
 }
