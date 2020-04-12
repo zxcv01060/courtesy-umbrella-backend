@@ -31,9 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String imageUrlName;
     @Value("${server.file.name}")
     private String fileUrlName;
-    private UserDetailsService userDetailsService;
-    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final UserDetailsService userDetailsService;
+    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Autowired
     public SecurityConfig(
@@ -62,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //    因此這些只能用在靜態資源上
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(HttpMethod.GET, "/static/**", String.format("/%s/**", imageUrlName), String.format("/%s/**", fileUrlName));
+        web.ignoring().antMatchers(HttpMethod.GET, "/doc/**", "/api/**", "/v3/**", "/swagger-ui/**", "/swagger-ui.html", "/csrf", "/webjars/**", "/v2/**", "/swagger-resources/**", "/static/**", String.format("/%s/**", imageUrlName), String.format("/%s/**", fileUrlName));
     }
 
     @Override

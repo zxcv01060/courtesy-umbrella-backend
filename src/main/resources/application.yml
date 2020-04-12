@@ -1,3 +1,10 @@
+springdoc:
+  api-docs:
+    path: /api/doc
+  swagger-ui:
+    path: /api
+  packages-to-scan: tw.edu.ntub.imd.courtesyumbrella.controller
+  default-produces-media-type: application/json;charset=UTF-8
 spring:
   main:
     banner-mode: off
