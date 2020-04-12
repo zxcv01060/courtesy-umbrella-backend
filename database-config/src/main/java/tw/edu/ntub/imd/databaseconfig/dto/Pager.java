@@ -1,18 +1,22 @@
 package tw.edu.ntub.imd.databaseconfig.dto;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
 public class Pager {
-    @Getter
-    private boolean infinity;
+    private final boolean infinity;
+    private final int page;
+    private final int count;
 
-    public int page;
-    public int count;
+    public static Pager getInstance(int page, int count) {
+        return new Pager(false, page, count);
+    }
 
-    public static Pager infinity() {
-        Pager pager = new Pager();
-        pager.infinity = true;
-        return pager;
+    public static Pager infinity(int page, int count) {
+        return new Pager(true, page, count);
     }
 
     public int getFirstResultIndex() {

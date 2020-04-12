@@ -8,7 +8,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.metamodel.SingularAttribute;
 
 public class NotNullRestriction<E> implements WhereRestriction<E> {
-    private SingularAttribute<? super E, ?> attribute;
+    private final SingularAttribute<? super E, ?> attribute;
 
     public NotNullRestriction(SingularAttribute<? super E, ?> attribute) {
         this.attribute = attribute;

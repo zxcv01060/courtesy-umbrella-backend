@@ -8,7 +8,7 @@ import javax.persistence.criteria.Predicate;
 import java.util.Arrays;
 
 public class OrRestriction<E> implements WhereRestriction<E> {
-    private WhereRestriction<E>[] restrictionSuppliers;
+    private final WhereRestriction<E>[] restrictionSuppliers;
 
     @SafeVarargs
     public OrRestriction(WhereRestriction<E>... restrictionSuppliers) {

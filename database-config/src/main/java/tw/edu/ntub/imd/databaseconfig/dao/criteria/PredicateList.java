@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class PredicateList implements Supplier<Predicate[]> {
-    private List<Predicate> predicateList = new ArrayList<>();
+    private final List<Predicate> predicateList = new ArrayList<>();
 
     public PredicateList add(Predicate predicate) {
         predicateList.add(predicate);

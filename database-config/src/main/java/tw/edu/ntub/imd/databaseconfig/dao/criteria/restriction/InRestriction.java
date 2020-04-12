@@ -8,7 +8,7 @@ import javax.persistence.criteria.Predicate;
 import java.util.Collection;
 
 public class InRestriction<E, V> extends AbstractRestriction<E, V> implements EmptyResultChecker {
-    private Object[] value;
+    private final Object[] value;
     private boolean empty;
 
     public InRestriction(@Nonnull ExpressionSupplier<E, V> supplier, @Nullable Collection<V> value) {

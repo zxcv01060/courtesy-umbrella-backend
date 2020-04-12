@@ -6,7 +6,7 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.From;
 
 public class ConstantExpressionSupplier<J, V> implements ExpressionSupplier<J, V> {
-    private V value;
+    private final V value;
 
     public ConstantExpressionSupplier(V value) {
         this.value = value;

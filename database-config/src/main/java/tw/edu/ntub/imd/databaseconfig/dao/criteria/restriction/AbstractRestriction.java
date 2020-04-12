@@ -8,7 +8,7 @@ import javax.persistence.criteria.From;
 import javax.persistence.criteria.Predicate;
 
 public abstract class AbstractRestriction<E, V> implements WhereRestriction<E> {
-    private ExpressionSupplier<E, V> supplier;
+    private final ExpressionSupplier<E, V> supplier;
 
     public AbstractRestriction(@Nonnull ExpressionSupplier<E, V> supplier) {
         this.supplier = supplier;

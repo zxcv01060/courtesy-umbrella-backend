@@ -7,7 +7,7 @@ import javax.persistence.criteria.From;
 import javax.persistence.criteria.Predicate;
 
 public class NotRestriction<E> implements WhereRestriction<E> {
-    private WhereRestriction<E> restriction;
+    private final WhereRestriction<E> restriction;
 
     public NotRestriction(WhereRestriction<E> restriction) {
         this.restriction = restriction;

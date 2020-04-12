@@ -7,7 +7,7 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 
 public class NotEqualRestriction<E, V> extends AbstractRestriction<E, V> {
-    private V value;
+    private final V value;
     private boolean ignoreCase;
 
     public NotEqualRestriction(@Nonnull ExpressionSupplier<E, V> supplier, @Nullable V value) {

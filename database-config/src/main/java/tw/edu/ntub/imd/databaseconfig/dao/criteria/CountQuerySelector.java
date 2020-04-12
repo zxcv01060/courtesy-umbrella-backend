@@ -10,7 +10,7 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.metamodel.SingularAttribute;
 
 public class CountQuerySelector<E> implements QueryRestrictionHandler<E>, QueryJoinHandler<E> {
-    private QuerySelectorImpl<E, Long> querySelector;
+    private final QuerySelectorImpl<E, Long> querySelector;
 
     public CountQuerySelector(QuerySelectorImpl<E, Long> querySelector) {
         this.querySelector = querySelector;

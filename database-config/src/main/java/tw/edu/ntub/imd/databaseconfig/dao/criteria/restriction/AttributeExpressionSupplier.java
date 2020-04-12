@@ -7,7 +7,7 @@ import javax.persistence.criteria.From;
 import javax.persistence.metamodel.SingularAttribute;
 
 public class AttributeExpressionSupplier<J, V> implements ExpressionSupplier<J, V> {
-    private SingularAttribute<? super J, V> attribute;
+    private final SingularAttribute<? super J, V> attribute;
 
     public AttributeExpressionSupplier(@Nonnull SingularAttribute<? super J, V> attribute) {
         this.attribute = attribute;

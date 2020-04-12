@@ -9,8 +9,8 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 
 public class CompareRestriction<E, V extends Comparable<? super V>> extends AbstractRestriction<E, V> {
-    private V value;
-    private Operator operator;
+    private final V value;
+    private final Operator operator;
 
     public CompareRestriction(@Nonnull ExpressionSupplier<E, V> supplier, @Nonnull V value, Operator operator) {
         super(supplier);

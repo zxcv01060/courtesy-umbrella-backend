@@ -11,9 +11,9 @@ import javax.persistence.metamodel.SingularAttribute;
 import java.util.Arrays;
 
 public class CriteriaFunction<J, V> implements ExpressionSupplier<J, V> {
-    private String functionName;
-    private Class<V> returnType;
-    private ExpressionSupplier<J, ?>[] argumentArray;
+    private final String functionName;
+    private final Class<V> returnType;
+    private final ExpressionSupplier<J, ?>[] argumentArray;
 
     @SuppressWarnings("unchecked")
     @SafeVarargs

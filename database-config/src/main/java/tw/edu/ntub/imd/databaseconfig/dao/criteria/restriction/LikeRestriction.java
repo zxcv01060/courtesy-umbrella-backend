@@ -6,7 +6,7 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 
 public class LikeRestriction<E> extends AbstractRestriction<E, String> {
-    private String pattern;
+    private final String pattern;
 
     public LikeRestriction(@Nonnull ExpressionSupplier<E, String> supplier, @Nonnull String pattern) {
         super(supplier);

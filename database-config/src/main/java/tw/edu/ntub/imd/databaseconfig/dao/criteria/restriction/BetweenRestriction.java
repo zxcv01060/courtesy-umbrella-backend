@@ -6,8 +6,8 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 
 public class BetweenRestriction<E, V extends Comparable<? super V>> extends AbstractRestriction<E, V> {
-    private V firstValue;
-    private V secondValue;
+    private final V firstValue;
+    private final V secondValue;
 
     public BetweenRestriction(@Nonnull ExpressionSupplier<E, V> supplier, @Nonnull V firstValue, @Nonnull V secondValue) {
         super(supplier);

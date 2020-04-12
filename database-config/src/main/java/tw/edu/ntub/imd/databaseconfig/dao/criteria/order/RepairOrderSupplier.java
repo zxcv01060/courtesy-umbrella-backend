@@ -5,8 +5,8 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Order;
 
 public class RepairOrderSupplier implements OrderSupplier<String> {
-    private String maintenancePersonUserId;
-    private boolean ascending;
+    private final String maintenancePersonUserId;
+    private final boolean ascending;
 
     public RepairOrderSupplier(String maintenancePersonUserId, boolean ascending) {
         this.maintenancePersonUserId = maintenancePersonUserId;

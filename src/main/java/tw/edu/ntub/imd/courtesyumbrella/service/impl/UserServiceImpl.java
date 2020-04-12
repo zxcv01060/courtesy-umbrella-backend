@@ -10,12 +10,10 @@ import tw.edu.ntub.imd.databaseconfig.entity.User;
 import tw.edu.ntub.imd.utils.bean.BeanUtils;
 
 import javax.annotation.Nonnull;
-import javax.annotation.PostConstruct;
 
 @Service
-public class UserServiceImpl extends BaseServiceImpl<UserDAO, String, User, UserBean> implements UserService {
+public class UserServiceImpl extends BaseServiceImpl<UserDAO, User, String, UserBean> implements UserService {
     private UserDAO userDAO;
-    private BeanEntityTransformer<User, UserBean> beanBeanEntityTransformer;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -25,16 +23,15 @@ public class UserServiceImpl extends BaseServiceImpl<UserDAO, String, User, User
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostConstruct
-    public void setBeanBeanEntityTransformer() {
-        this.beanBeanEntityTransformer = super.getBeanEntityTransformer();
-    }
-
     @Override
-    public void create(UserBean userBean) {
-        User user = beanBeanEntityTransformer.toEntity(userBean);
+    public UserBean create(UserBean userBean) {
+        User user = toEntity(userBean);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDAO.insert(user);
+        user = userDAO.saveAndFlush(user);
+        userBean.setPassword(user.getPassword());
+        userBean.setModifyId(user.getModifyId());
+        userBean.setModifyDate(user.getModifyDate());
+        return userBean;
     }
 
     private static class UserBeanEntityTransformer implements BeanEntityTransformer<User, UserBean> {

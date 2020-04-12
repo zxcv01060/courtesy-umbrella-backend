@@ -1,5 +1,7 @@
 package tw.edu.ntub.imd.courtesyumbrella.service.impl;
 
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.util.Assert;
 import tw.edu.ntub.imd.courtesyumbrella.bean.BaseBean;
 import tw.edu.ntub.imd.courtesyumbrella.service.BaseViewService;
@@ -7,11 +9,13 @@ import tw.edu.ntub.imd.databaseconfig.dao.BaseViewDAO;
 import tw.edu.ntub.imd.databaseconfig.dto.Pager;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-public abstract class BaseViewServiceImpl<D extends BaseViewDAO<ID, E>, ID, E, B extends BaseBean> implements BaseViewService<B, ID> {
+public abstract class BaseViewServiceImpl<D extends BaseViewDAO<E, ID>, E, ID extends Serializable, B extends BaseBean> implements BaseViewService<B, ID> {
     protected D baseDAO;
     private BeanEntityTransformer<E, B> beanEntityTransformer;
 
@@ -22,33 +26,29 @@ public abstract class BaseViewServiceImpl<D extends BaseViewDAO<ID, E>, ID, E, B
         this.beanEntityTransformer = beanEntityTransformer;
     }
 
-    List<E> createVOList(List<B> bList) {
-        List<E> voList = new ArrayList<>();
-        if (bList == null) {
-            return voList;
-        }
-        for (B b : bList) {
-            E vo = beanEntityTransformer.toEntity(b);
-            voList.add(vo);
-        }
-        return voList;
+    @Nonnull
+    protected B toBean(@Nonnull E e) {
+        return beanEntityTransformer.toBean(e);
     }
 
-    List<B> createBeanList(List<E> eList) {
-        List<B> beanList = new ArrayList<>();
-        if (eList == null) {
-            return beanList;
-        }
-        for (E e : eList) {
-            B bean = beanEntityTransformer.toBean(e);
-            beanList.add(bean);
-        }
-        return beanList;
+    @Nonnull
+    protected List<B> toBeanList(@Nonnull List<E> eList) {
+        return beanEntityTransformer.toBeanList(eList);
+    }
+
+    @Nonnull
+    protected E toEntity(@Nonnull B b) {
+        return beanEntityTransformer.toEntity(b);
+    }
+
+    @Nonnull
+    protected List<E> toEntityList(@Nonnull List<B> bList) {
+        return beanEntityTransformer.toEntityList(bList);
     }
 
     @Override
     public Optional<B> getById(ID id) {
-        Optional<E> optional = baseDAO.getById(id);
+        Optional<E> optional = baseDAO.findById(id);
         if (optional.isPresent()) {
             E entity = optional.get();
             B bean = beanEntityTransformer.toBean(entity);
@@ -60,22 +60,24 @@ public abstract class BaseViewServiceImpl<D extends BaseViewDAO<ID, E>, ID, E, B
 
     @Override
     public List<B> searchAll() {
-        return createBeanList(baseDAO.searchAll());
+        return toBeanList(baseDAO.findAll());
     }
 
     @Override
-    public List<B> searchAllWithPage(Pager pager) {
-        return createBeanList(baseDAO.searchAll(pager));
+    public List<B> searchAll(Pager pager) {
+        PageRequest pageRequest = PageRequest.of(pager.getPage(), pager.getCount());
+        return toBeanList(baseDAO.findAll(pageRequest).getContent());
     }
 
     @Override
     public List<B> searchByBean(B b) {
-        return createBeanList(baseDAO.searchByEntity(beanEntityTransformer.toEntity(b)));
+        List<E> eList = baseDAO.findAll(Example.of(beanEntityTransformer.toEntity(b)));
+        return toBeanList(eList);
     }
 
     @Override
     public Optional<B> getByBean(B b) {
-        Optional<E> optional = baseDAO.getByEntity(beanEntityTransformer.toEntity(b));
+        Optional<E> optional = baseDAO.findOne(Example.of(beanEntityTransformer.toEntity(b)));
         return optional.map(beanEntityTransformer::toBean);
     }
 
@@ -88,6 +90,16 @@ public abstract class BaseViewServiceImpl<D extends BaseViewDAO<ID, E>, ID, E, B
         E toEntity(@Nonnull B b);
 
         @Nonnull
+        default List<E> toEntityList(@Nonnull List<B> bList) {
+            return bList.stream().filter(Objects::nonNull).map(this::toEntity).collect(Collectors.toList());
+        }
+
+        @Nonnull
         B toBean(@Nonnull E e);
+
+        @Nonnull
+        default List<B> toBeanList(@Nonnull List<E> eList) {
+            return eList.stream().filter(Objects::nonNull).map(this::toBean).collect(Collectors.toList());
+        }
     }
 }

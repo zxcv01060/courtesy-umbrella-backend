@@ -26,12 +26,12 @@ public class QuerySelectorImpl<E, R> implements QuerySelector<E, R> {
     private EntityManager entityManager;
     private CriteriaBuilder builder;
     private CriteriaQuery<R> query;
-    private List<Selection<?>> selectionList = new ArrayList<>();
+    private final List<Selection<?>> selectionList = new ArrayList<>();
     private Root<E> root;
-    private PredicateList predicateList = new PredicateList();
-    private List<Order> orderList = new ArrayList<>();
-    private List<Expression<?>> groupByList = new ArrayList<>();
-    private PredicateList havingList = new PredicateList();
+    private final PredicateList predicateList = new PredicateList();
+    private final List<Order> orderList = new ArrayList<>();
+    private final List<Expression<?>> groupByList = new ArrayList<>();
+    private final PredicateList havingList = new PredicateList();
     private boolean emptyResult;
     private boolean distinct;
 
@@ -180,7 +180,7 @@ public class QuerySelectorImpl<E, R> implements QuerySelector<E, R> {
             } else {
                 return createTypedQuery()
                         .setFirstResult(pager.getFirstResultIndex())
-                        .setMaxResults(pager.count)
+                        .setMaxResults(pager.getCount())
                         .getResultList();
             }
         }

@@ -7,7 +7,7 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Order;
 
 public class SimpleOrderSupplier<V> implements OrderSupplier<V> {
-    private OrderType orderType;
+    private final OrderType orderType;
 
     public SimpleOrderSupplier(OrderType orderType) {
         this.orderType = orderType;
