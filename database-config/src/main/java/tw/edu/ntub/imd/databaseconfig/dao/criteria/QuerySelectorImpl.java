@@ -180,7 +180,7 @@ public class QuerySelectorImpl<E, R> implements QuerySelector<E, R> {
             } else {
                 return createTypedQuery()
                         .setFirstResult(pager.getFirstResultIndex())
-                        .setMaxResults(pager.count)
+                        .setMaxResults(pager.getCount())
                         .getResultList();
             }
         }
