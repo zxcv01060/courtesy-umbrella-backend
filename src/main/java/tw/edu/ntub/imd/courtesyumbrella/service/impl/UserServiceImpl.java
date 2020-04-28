@@ -13,8 +13,8 @@ import javax.annotation.Nonnull;
 
 @Service
 public class UserServiceImpl extends BaseServiceImpl<UserDAO, User, String, UserBean> implements UserService {
-    private UserDAO userDAO;
-    private PasswordEncoder passwordEncoder;
+    private final UserDAO userDAO;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserServiceImpl(UserDAO userDAO, PasswordEncoder passwordEncoder) {
@@ -27,8 +27,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserDAO, User, String, User
     public UserBean create(UserBean userBean) {
         User user = toEntity(userBean);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setModifyId(user.getAccount());
         user = userDAO.saveAndFlush(user);
         userBean.setPassword(user.getPassword());
+        userBean.setCreateDate(user.getCreateDate());
         userBean.setModifyId(user.getModifyId());
         userBean.setModifyDate(user.getModifyDate());
         return userBean;
