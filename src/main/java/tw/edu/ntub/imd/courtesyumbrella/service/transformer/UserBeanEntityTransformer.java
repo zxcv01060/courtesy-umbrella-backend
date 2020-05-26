@@ -1,9 +1,9 @@
 package tw.edu.ntub.imd.courtesyumbrella.service.transformer;
 
 import org.springframework.stereotype.Component;
+import tw.edu.ntub.imd.birc.common.util.bean.BeanUtils;
 import tw.edu.ntub.imd.courtesyumbrella.bean.UserBean;
 import tw.edu.ntub.imd.databaseconfig.entity.User;
-import tw.edu.ntub.imd.utils.bean.BeanUtils;
 
 import javax.annotation.Nonnull;
 

@@ -11,10 +11,10 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import tw.edu.ntub.imd.birc.common.util.bean.BeanUtils;
 import tw.edu.ntub.imd.courtesyumbrella.bean.UserBean;
 import tw.edu.ntub.imd.databaseconfig.dao.UserDAO;
 import tw.edu.ntub.imd.databaseconfig.entity.User;
-import tw.edu.ntub.imd.utils.bean.BeanUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -45,8 +45,10 @@ class UserServiceTest {
                 LocalDate.of(2020, 4, 5),
                 LocalTime.of(13, 48, 12)
         ));
-        Mockito.when(passwordEncoder.encode(Mockito.anyString())).thenReturn("i am encoded password");
-        Mockito.when(userDAO.saveAndFlush(Mockito.any(User.class))).thenReturn(returnUser);
+        Mockito.when(passwordEncoder.encode(Mockito.anyString()))
+                .thenReturn("i am encoded password");
+        Mockito.when(userDAO.saveAndFlush(Mockito.any(User.class)))
+                .thenReturn(returnUser);
         UserBean createdUserBean = userService.create(userBean);
         Assertions.assertAll(
                 () -> Assertions.assertEquals("test save", createdUserBean.getAccount()),

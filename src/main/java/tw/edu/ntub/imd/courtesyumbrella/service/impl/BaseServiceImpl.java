@@ -1,11 +1,11 @@
 package tw.edu.ntub.imd.courtesyumbrella.service.impl;
 
 import org.springframework.transaction.annotation.Transactional;
+import tw.edu.ntub.imd.birc.common.util.bean.BeanUtils;
 import tw.edu.ntub.imd.courtesyumbrella.bean.BaseBean;
 import tw.edu.ntub.imd.courtesyumbrella.service.BaseService;
 import tw.edu.ntub.imd.courtesyumbrella.service.transformer.BeanEntityTransformer;
 import tw.edu.ntub.imd.databaseconfig.dao.BaseDAO;
-import tw.edu.ntub.imd.utils.bean.BeanUtils;
 
 import java.io.Serializable;
 import java.util.Optional;

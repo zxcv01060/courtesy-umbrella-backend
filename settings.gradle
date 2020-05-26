@@ -1,2 +1,2 @@
 rootProject.name = 'courtesy-umbrella'
-include 'common', 'config', 'database-config'
+include 'modules:common', 'modules:config', 'modules:database-config'

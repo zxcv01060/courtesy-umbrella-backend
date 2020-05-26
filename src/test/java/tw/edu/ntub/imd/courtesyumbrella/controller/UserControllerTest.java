@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import tw.edu.ntub.imd.config.Config;
 import tw.edu.ntub.imd.courtesyumbrella.bean.UserBean;
 import tw.edu.ntub.imd.courtesyumbrella.service.UserService;
-import tw.edu.ntub.imd.courtesyumbrella.utils.http.ResponseUtils;
+import tw.edu.ntub.imd.courtesyumbrella.util.http.ResponseUtils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -54,35 +54,46 @@ class UserControllerTest {
         userObject.put("account", userBean.getAccount());
         userObject.put("password", userBean.getPassword());
         userObject.put("email", userBean.getEmail());
-        userObject.put("birthday", userBean.getBirthday().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+        userObject.put("birthday", userBean.getBirthday()
+                .format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
         String requestBody = userObject.toString();
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/user/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(requestBody);
         mockMvc.perform(request)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.result").value(true))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.errorCode").value(""))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.message").hasJsonPath());
-        Mockito.verify(userService, Mockito.times(1)).create(userBean);
+                .andExpect(MockMvcResultMatchers.status()
+                                   .isOk())
+                .andExpect(MockMvcResultMatchers.header()
+                                   .string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.result")
+                                   .value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.errorCode")
+                                   .value(""))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message")
+                                   .hasJsonPath());
+        Mockito.verify(userService, Mockito.times(1))
+                .create(userBean);
     }
 
     @Test
     @DisplayName("測試缺少account欄位的註冊功能")
     void testFailRegister() throws Exception {
-        Mockito.doThrow(new UserController.UserBeanRequiredParameterException("account")).when(userService).create(new UserBean());
         JSONObject userObject = new JSONObject();
         String requestBody = userObject.toString();
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/user/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody);
         mockMvc.perform(request)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.result").value(false))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.errorCode").value("Required - user.account"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("缺少必要參數：user.account"));
+                .andExpect(MockMvcResultMatchers.status()
+                                   .isOk())
+                .andExpect(MockMvcResultMatchers.header()
+                                   .string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.result")
+                                   .value(false))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.errorCode")
+                                   .value("Required - user.account"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message")
+                                   .value("缺少必要參數：user.account"));
     }
 }

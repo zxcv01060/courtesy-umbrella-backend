@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import tw.edu.ntub.imd.courtesyumbrella.utils.http.ResponseUtils;
+import tw.edu.ntub.imd.courtesyumbrella.util.http.ResponseUtils;
 
 @SpringBootApplication(scanBasePackages = "tw.edu.ntub.imd")
 public class CourtesyUmbrellaApplication {
