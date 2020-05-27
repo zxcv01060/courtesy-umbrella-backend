@@ -5,13 +5,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ContextConfiguration;
 import tw.edu.ntub.imd.birc.common.util.bean.BeanUtils;
+import tw.edu.ntub.imd.courtesyumbrella.TestApplication;
 import tw.edu.ntub.imd.courtesyumbrella.bean.UserBean;
 import tw.edu.ntub.imd.databaseconfig.dao.UserDAO;
 import tw.edu.ntub.imd.databaseconfig.entity.User;
@@ -21,6 +20,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @SpringBootTest
+@ContextConfiguration(classes = TestApplication.class)
 @DisplayName("測試UserService")
 class UserServiceTest {
     @MockBean
@@ -62,13 +62,5 @@ class UserServiceTest {
                                 LocalTime.of(13, 48, 12)
                         ), createdUserBean.getModifyDate())
         );
-    }
-
-    @SpringBootApplication(
-            scanBasePackages = "tw.edu.ntub.imd.courtesyumbrella.service",
-            exclude = {HibernateJpaAutoConfiguration.class, DataSourceAutoConfiguration.class}
-    )
-    static class InnerApplication {
-
     }
 }

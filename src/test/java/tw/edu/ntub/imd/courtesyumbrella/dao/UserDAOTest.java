@@ -4,11 +4,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
+import tw.edu.ntub.imd.courtesyumbrella.TestApplication;
+import tw.edu.ntub.imd.databaseconfig.Config;
 import tw.edu.ntub.imd.databaseconfig.dao.UserDAO;
 import tw.edu.ntub.imd.databaseconfig.entity.User;
 
@@ -16,16 +17,13 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @DataJpaTest
+@ContextConfiguration(classes = TestApplication.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import({
+        Config.class
+})
 @DisplayName("UserDAO測試")
 class UserDAOTest {
-    @SpringBootApplication
-    @EnableJpaRepositories(basePackages = "tw.edu.ntub.imd.databaseconfig.dao")
-    @EntityScan("tw.edu.ntub.imd.databaseconfig.entity")
-    static class InnerApplication {
-
-    }
-
     @Autowired
     private UserDAO userDAO;
 

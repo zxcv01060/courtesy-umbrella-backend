@@ -16,9 +16,11 @@ public class UserBean extends BaseBean {
     @Schema(description = "帳號")
     @NotBlank(message = "帳號 - " + BindingResultUtils.DEFAULT_NOT_BLANK_MESSAGE_TEMPLATE)
     @Size(max = 100, message = "帳號 - " + BindingResultUtils.DEFAULT_MAX_SIZE_MESSAGE_TEMPLATE)
+    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "帳號 - 請輸入純英文與數字")
     private String account;
     @Schema(description = "密碼")
     @NotBlank(message = "密碼 - " + BindingResultUtils.DEFAULT_NOT_BLANK_MESSAGE_TEMPLATE)
+    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "密碼 - 請輸入純英文與數字")
     private String password;
     @Schema(hidden = true)
     private Integer roleId;
