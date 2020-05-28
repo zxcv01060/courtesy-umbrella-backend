@@ -13,10 +13,11 @@ import tw.edu.ntub.imd.databaseconfig.enumerated.LogRecordDeviceType;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "log_record", schema = Config.DATABASE_NAME)
 @Data
 @EqualsAndHashCode(exclude = "userByExecutor")
+@Entity
+@Table(name = "log_record", schema = Config.DATABASE_NAME)
+@SuppressWarnings("unused")
 public class LogRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

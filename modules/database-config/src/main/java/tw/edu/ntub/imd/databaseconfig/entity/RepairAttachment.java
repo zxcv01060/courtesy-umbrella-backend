@@ -10,12 +10,13 @@ import tw.edu.ntub.imd.databaseconfig.enumerated.MediaType;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "repair_attachment", schema = Config.DATABASE_NAME)
 @Data
 @EqualsAndHashCode(exclude = {
         "repairRecordByRecordId"
 })
+@Entity
+@Table(name = "repair_attachment", schema = Config.DATABASE_NAME)
+@SuppressWarnings("unused")
 public class RepairAttachment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +37,7 @@ public class RepairAttachment {
     public void setRepairRecordByRecordId(RepairRecord repairRecordByRecordId) {
         this.repairRecordByRecordId = repairRecordByRecordId;
         if (repairRecordByRecordId != null) {
-            setRecordId(repairRecordByRecordId.getId());
+            recordId = repairRecordByRecordId.getId();
         }
     }
 }

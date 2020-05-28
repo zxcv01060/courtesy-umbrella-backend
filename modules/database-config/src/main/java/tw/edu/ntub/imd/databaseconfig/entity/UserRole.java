@@ -13,6 +13,6 @@ public class UserRole {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = false, updatable = false)
     private Integer id;
-    @Column(name = "name", length = 50, nullable = false)
+    @Column(name = "name", length = 50, nullable = false, insertable = false, updatable = false)
     private String name;
 }

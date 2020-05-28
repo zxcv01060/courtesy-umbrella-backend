@@ -9,18 +9,24 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "item_type", schema = Config.DATABASE_NAME)
+@Table(name = "station_address", schema = Config.DATABASE_NAME)
 @SuppressWarnings("unused")
-public class ItemType {
+public class StationAddress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Column(name = "name", length = 70, nullable = false)
-    private String name;
     @Column(name = "enable", nullable = false)
     @Convert(converter = BooleanTo1And0Converter.class)
     private Boolean enable = true;
+    @Column(name = "longitude", length = 50, nullable = false)
+    private String longitude;
+    @Column(name = "latitude", length = 50, nullable = false)
+    private String latitude;
+    @Column(name = "address", length = 200, nullable = false)
+    private String address;
+    @Column(name = "total_count", nullable = false)
+    private Integer totalCount;
     @Column(name = "create_id", length = 100, nullable = false)
     private String createId;
     @Column(name = "create_date", nullable = false)
