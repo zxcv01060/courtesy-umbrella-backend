@@ -12,8 +12,7 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(exclude = {
         "repairRecordByRepairRecordId",
-        "userByHandler",
-        "userByModifyId"
+        "userByHandler"
 })
 @Entity
 @Table(name = "feedback", schema = Config.DATABASE_NAME)
