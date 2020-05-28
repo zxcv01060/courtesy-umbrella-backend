@@ -1,4 +1,4 @@
-package tw.edu.ntub.imd.courtesyumbrella.controller;
+package tw.edu.ntub.imd.courtesyumbrella.unit.controller;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import tw.edu.ntub.imd.courtesyumbrella.TestApplication;
 import tw.edu.ntub.imd.courtesyumbrella.bean.UserBean;
+import tw.edu.ntub.imd.courtesyumbrella.controller.UserController;
 import tw.edu.ntub.imd.courtesyumbrella.data.supplier.UserDataSupplier;
 import tw.edu.ntub.imd.courtesyumbrella.service.UserService;
 import tw.edu.ntub.imd.courtesyumbrella.util.request.TestCreateOrUpdateRequest;

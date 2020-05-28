@@ -3,6 +3,7 @@ package tw.edu.ntub.imd.courtesyumbrella.controller;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,6 +17,7 @@ import tw.edu.ntub.imd.courtesyumbrella.exception.form.InvalidFormDateFormatExce
 import tw.edu.ntub.imd.courtesyumbrella.exception.form.InvalidFormNumberFormatException;
 import tw.edu.ntub.imd.courtesyumbrella.exception.form.InvalidRequestFormatException;
 import tw.edu.ntub.imd.courtesyumbrella.util.http.ResponseEntityBuilder;
+import tw.edu.ntub.imd.databaseconfig.exception.RepeatPersistException;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -74,6 +76,13 @@ public class ExceptionHandleController {
             return ResponseEntityBuilder.error(new NullRequestBodyException(e))
                     .build();
         }
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<String> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
+        e.printStackTrace();
+        return ResponseEntityBuilder.error(new RepeatPersistException("重複新增"))
+                .build();
     }
 
     @ExceptionHandler(Exception.class)

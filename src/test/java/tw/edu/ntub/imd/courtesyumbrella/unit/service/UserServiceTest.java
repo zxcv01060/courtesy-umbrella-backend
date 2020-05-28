@@ -1,4 +1,4 @@
-package tw.edu.ntub.imd.courtesyumbrella.service;
+package tw.edu.ntub.imd.courtesyumbrella.unit.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import tw.edu.ntub.imd.birc.common.util.bean.BeanUtils;
 import tw.edu.ntub.imd.courtesyumbrella.TestApplication;
 import tw.edu.ntub.imd.courtesyumbrella.bean.UserBean;
+import tw.edu.ntub.imd.courtesyumbrella.service.UserService;
 import tw.edu.ntub.imd.databaseconfig.dao.UserDAO;
 import tw.edu.ntub.imd.databaseconfig.entity.User;
 

@@ -1,7 +1,8 @@
 INSERT INTO sharing_economy.user_role(id, name)
 VALUES (1, 'admin'),
        (2, 'manager'),
-       (3, 'normal');
+       (3, 'normal'),
+       (4, 'repairer');
 INSERT INTO sharing_economy.user(account, password, role_id, enable, email, birthday, create_date, modify_id,
                                  modify_date)
 VALUES ('admin', '$2a$10$hagQjQFpQTlChHKHzKpLT.0eabhsQNOOnJ/VJkH/e4PPRqoG55nsK', 1, 1, '10646007@ntub.edu.tw',

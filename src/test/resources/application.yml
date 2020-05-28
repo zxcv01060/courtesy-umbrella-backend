@@ -4,15 +4,16 @@ spring:
     allow-bean-definition-overriding: true
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:sharing_economy;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false;INIT=CREATE SCHEMA IF NOT EXISTS sharing_economy
+    url: jdbc:h2:mem:;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false;INIT=CREATE SCHEMA IF NOT EXISTS sharing_economy
+    platform: h2
   jpa:
     database: h2
     database-platform: org.hibernate.dialect.H2Dialect
     open-in-view: true
-    show-sql: false
+    show-sql: true
     generate-ddl: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
     properties:
       hibernate:
         dialect: ${spring.jpa.database-platform}

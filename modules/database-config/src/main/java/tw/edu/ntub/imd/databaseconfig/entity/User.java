@@ -3,7 +3,9 @@ package tw.edu.ntub.imd.databaseconfig.entity;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Setter;
+import lombok.Getter;
+import org.springframework.data.domain.Persistable;
+import tw.edu.ntub.imd.birc.common.annotation.CopyIgnore;
 import tw.edu.ntub.imd.databaseconfig.Config;
 import tw.edu.ntub.imd.databaseconfig.converter.BooleanTo1And0Converter;
 
@@ -11,11 +13,16 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "user", schema = Config.DATABASE_NAME)
 @Data
 @EqualsAndHashCode(exclude = "userRoleByRoleId")
-public class User {
+@Entity
+@Table(name = "user", schema = Config.DATABASE_NAME)
+@SuppressWarnings("unused")
+public class User implements Persistable<String> {
+    @Transient
+    @CopyIgnore
+    @Getter(AccessLevel.NONE)
+    private boolean save;
     @Id
     @Column(name = "account", length = 100, nullable = false)
     private String account;
@@ -38,7 +45,6 @@ public class User {
     private LocalDateTime modifyDate = LocalDateTime.now();
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    @Setter(AccessLevel.NONE)
     private UserRole userRoleByRoleId;
 
     public String getRoleName() {
@@ -48,7 +54,17 @@ public class User {
     public void setUserRoleByRoleId(UserRole userRoleByRoleId) {
         this.userRoleByRoleId = userRoleByRoleId;
         if (userRoleByRoleId != null) {
-            setRoleId(userRoleByRoleId.getId());
+            roleId = userRoleByRoleId.getId();
         }
+    }
+
+    @Override
+    public String getId() {
+        return account;
+    }
+
+    @Override
+    public boolean isNew() {
+        return save;
     }
 }
