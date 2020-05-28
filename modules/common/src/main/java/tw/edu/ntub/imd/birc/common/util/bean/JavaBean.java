@@ -1,5 +1,6 @@
 package tw.edu.ntub.imd.birc.common.util.bean;
 
+import tw.edu.ntub.imd.birc.common.annotation.CopyIgnore;
 import tw.edu.ntub.imd.birc.common.exception.NullParameterException;
 import tw.edu.ntub.imd.birc.common.exception.ProjectException;
 import tw.edu.ntub.imd.birc.common.wrapper.ClassWrapper;
@@ -20,7 +21,7 @@ public class JavaBean {
         this.originalObject = object;
         ClassWrapper classWrapper = new ClassWrapper(originalObject.getClass());
         for (FieldWrapper fieldWrapper : classWrapper.getAllField()) {
-            if (!fieldWrapper.isStatic() && !fieldWrapper.isFinal()) {
+            if (!fieldWrapper.isStatic() && !fieldWrapper.isFinal() && !fieldWrapper.isAnnotationPresent(CopyIgnore.class)) {
                 fieldList.add(new JavaBeanField(object, fieldWrapper));
             }
         }
