@@ -5,12 +5,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.ContextConfiguration;
 import tw.edu.ntub.imd.birc.common.util.bean.BeanUtils;
-import tw.edu.ntub.imd.courtesyumbrella.TestApplication;
+import tw.edu.ntub.imd.courtesyumbrella.annotation.ServiceTest;
 import tw.edu.ntub.imd.courtesyumbrella.bean.UserBean;
 import tw.edu.ntub.imd.courtesyumbrella.service.UserService;
 import tw.edu.ntub.imd.databaseconfig.dao.UserDAO;
@@ -20,8 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-@SpringBootTest
-@ContextConfiguration(classes = TestApplication.class)
+@ServiceTest
 @DisplayName("測試UserService")
 class UserServiceTest {
     @MockBean
