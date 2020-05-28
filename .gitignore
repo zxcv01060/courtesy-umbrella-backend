@@ -263,7 +263,7 @@ HELP.md
 .vscode/
 /src/main/resources/application-local.yml
 /src/main/resources/application-local.properties
-/database-config/.gradle
-/config/.gradle
-/database-config/src/generated/
+/modules/database-config/.gradle
+/modules/config/.gradle
+/modules/database-config/src/generated/
 sharing_economy.db
