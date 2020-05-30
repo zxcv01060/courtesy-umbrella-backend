@@ -45,7 +45,7 @@ public class Config implements WebMvcConfigurer {
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-        configurer.defaultContentType(MediaType.APPLICATION_JSON);
+        configurer.defaultContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
     }
 
     @Override

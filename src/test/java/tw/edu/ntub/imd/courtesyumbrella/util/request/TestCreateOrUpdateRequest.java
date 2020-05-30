@@ -56,21 +56,21 @@ public class TestCreateOrUpdateRequest {
     private void sendRequest(List<DataParameter> dataParameterList, ResponseData responseData) throws Exception {
         mockMvc.perform(requestSupplier.get(url, dataParameterList))
                 .andExpect(MockMvcResultMatchers.status()
-                                   .isOk())
+                        .isOk())
                 .andExpect(MockMvcResultMatchers.header()
-                                   .string("Content-Type", "application/json"))
+                        .string("Content-Type", "application/json;charset=UTF-8"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.result")
-                                   .value(responseData.isSuccess()))
+                        .value(responseData.isSuccess()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.errorCode")
-                                   .hasJsonPath())
+                        .hasJsonPath())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.errorCode")
-                                   .value(responseData.getErrorCode()))
+                        .value(responseData.getErrorCode()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message")
-                                   .value(responseData.getMessage()))
+                        .value(responseData.getMessage()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data")
-                                   .hasJsonPath())
+                        .hasJsonPath())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data")
-                                   .isMap());
+                        .isMap());
         executeTimeVerify.verify(times);
     }
 
