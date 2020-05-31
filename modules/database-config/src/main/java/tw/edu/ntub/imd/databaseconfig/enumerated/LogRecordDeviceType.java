@@ -1,13 +1,16 @@
 package tw.edu.ntub.imd.databaseconfig.enumerated;
 
 public enum LogRecordDeviceType {
-    IE("0"),
-    EDGE("1"),
-    CHROME("2"),
-    FIRE_FOX("3"),
-    SAFARI("4"),
-    ANDROID("5"),
-    IOS("6");
+    UNKNOWN("-1"),
+    POSTMAN("0"),
+    IE("1"),
+    EDGE("2"),
+    CHROME("3"),
+    FIRE_FOX("4"),
+    SAFARI("5"),
+    OPERA("6"),
+    ANDROID("7"),
+    IOS("8");
 
     private final String deviceType;
 

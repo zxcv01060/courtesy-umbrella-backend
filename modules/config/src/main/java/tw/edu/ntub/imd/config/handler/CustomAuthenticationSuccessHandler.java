@@ -1,6 +1,6 @@
 package tw.edu.ntub.imd.config.handler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +27,13 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         response.setHeader("X-Auth-Token", jwtUtils.getToken(userDetails));
-        ObjectMapper mapper = new ObjectMapper();
-        ResponseUtils.response(response, 200, true, "", "登入成功", mapper.createObjectNode());
+        ResponseUtils.response(
+                response,
+                200,
+                true,
+                ResponseUtils.LOGIN_SUCCESS_ERROR_CODE,
+                ResponseUtils.LOGIN_SUCCESS_MESSAGE,
+                JsonNodeFactory.instance.objectNode()
+        );
     }
 }

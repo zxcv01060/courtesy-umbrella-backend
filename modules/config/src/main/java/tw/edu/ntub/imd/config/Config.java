@@ -17,6 +17,7 @@ import java.util.List;
 
 @Configuration
 public class Config implements WebMvcConfigurer {
+
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.stream()

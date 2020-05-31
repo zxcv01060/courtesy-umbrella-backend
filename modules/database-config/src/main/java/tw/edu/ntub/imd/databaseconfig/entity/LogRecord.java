@@ -3,8 +3,9 @@ package tw.edu.ntub.imd.databaseconfig.entity;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Setter;
+import lombok.Getter;
 import tw.edu.ntub.imd.databaseconfig.Config;
+import tw.edu.ntub.imd.databaseconfig.converter.BooleanTo1And0Converter;
 import tw.edu.ntub.imd.databaseconfig.converter.LogRecordDeviceConverter;
 import tw.edu.ntub.imd.databaseconfig.converter.LogRecordDeviceTypeConverter;
 import tw.edu.ntub.imd.databaseconfig.enumerated.LogRecordDevice;
@@ -23,10 +24,14 @@ public class LogRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Column(name = "url", length = 500, nullable = false)
-    private String url;
+    @Column(name = "server_version", length = 20, nullable = false)
+    private String serverVersion;
     @Column(name = "ip", length = 19, nullable = false)
     private String ip;
+    @Column(name = "method", length = 6, nullable = false)
+    private String method;
+    @Column(name = "url", length = 500, nullable = false)
+    private String url;
     @Column(name = "executor", length = 100, nullable = false)
     private String executor;
     @Column(name = "execute_date", nullable = false)
@@ -37,15 +42,34 @@ public class LogRecord {
     @Column(name = "device_type", length = 1, nullable = false)
     @Convert(converter = LogRecordDeviceTypeConverter.class)
     private LogRecordDeviceType deviceType;
+    @Column(name = "device_version", length = 100, nullable = false)
+    private String deviceVersion;
+    @Column(name = "result", nullable = false)
+    @Convert(converter = BooleanTo1And0Converter.class)
+    @Getter(AccessLevel.NONE)
+    private Boolean success;
+    @Column(name = "error_code", length = 50, nullable = false)
+    private String errorCode;
+    @Column(name = "message", length = 3000, nullable = false)
+    private String message;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "executor", referencedColumnName = "account", nullable = false, insertable = false, updatable = false)
-    @Setter(AccessLevel.NONE)
     private User userByExecutor;
+
+    public void setMethod(String method) {
+        if (method != null) {
+            this.method = method.toUpperCase();
+        }
+    }
+
+    public Boolean isSuccess() {
+        return success;
+    }
 
     public void setUserByExecutor(User userByExecutor) {
         this.userByExecutor = userByExecutor;
         if (userByExecutor != null) {
-            setExecutor((userByExecutor.getAccount()));
+            executor = userByExecutor.getAccount();
         }
     }
 }

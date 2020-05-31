@@ -26,7 +26,11 @@ public class ObjectData implements ResponseData {
 
     public ObjectData() {
         this(ResponseUtils.createMapper()
-                     .createObjectNode());
+                .createObjectNode());
+    }
+
+    public ObjectData(String jsonString) {
+        this((ObjectNode) ResponseUtils.createJsonNode(jsonString));
     }
 
     public ObjectData(ObjectNode objectNode) {
@@ -185,5 +189,50 @@ public class ObjectData implements ResponseData {
     @Override
     public ObjectNode getData() {
         return objectNode;
+    }
+
+    public Integer getInt(String key) {
+        JsonNode nodeValue = objectNode.findValue(key);
+        if (nodeValue != null && !nodeValue.isNull()) {
+            return nodeValue.asInt();
+        } else {
+            return null;
+        }
+    }
+
+    public Long getLong(String key) {
+        JsonNode nodeValue = objectNode.findValue(key);
+        if (nodeValue != null && !nodeValue.isNull()) {
+            return nodeValue.asLong();
+        } else {
+            return null;
+        }
+    }
+
+    public Double getDouble(String key) {
+        JsonNode nodeValue = objectNode.findValue(key);
+        if (nodeValue != null && !nodeValue.isNull()) {
+            return nodeValue.asDouble();
+        } else {
+            return null;
+        }
+    }
+
+    public Boolean getBoolean(String key) {
+        JsonNode nodeValue = objectNode.findValue(key);
+        if (nodeValue != null && !nodeValue.isNull()) {
+            return nodeValue.asBoolean();
+        } else {
+            return null;
+        }
+    }
+
+    public String getString(String key) {
+        JsonNode nodeValue = objectNode.findValue(key);
+        if (nodeValue != null && !nodeValue.isNull()) {
+            return nodeValue.asText();
+        } else {
+            return null;
+        }
     }
 }
