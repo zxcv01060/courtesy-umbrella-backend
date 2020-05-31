@@ -16,7 +16,7 @@ spring:
       secret: \$2a\$10\$y/KQjTKFpJsCG6wCAiEW5uFfyPotF4kLE2kOWwLSgJjjuhLJRTNZW
   datasource:
     type: com.mchange.v2.c3p0.ComboPooledDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     url: ${courtesy-umbrella.database.url}
     username: ${courtesy-umbrella.database.account}
     password: ${courtesy-umbrella.database.password}
@@ -43,3 +43,11 @@ server:
     url: http://${server.ip}:${server.port}${server.context-path}${server.image.name}
   file:
     url: http://${server.ip}:${server.port}${server.context-path}${server.file.name}
+logging:
+  config: classpath:log4j2.yml
+  level:
+    jdbc:
+      sqlonly: OFF
+      audit: OFF
+      resultset: OFF
+      connection: OFF

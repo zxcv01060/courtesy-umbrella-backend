@@ -6,3 +6,7 @@ server:
   file:
     name: file
     path: C:${file.separator}UploadFile${file.separator}${server.file.name}${file.separator}
+logging:
+  level:
+    sqltiming: OFF
+    resultsettable: OFF

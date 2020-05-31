@@ -39,7 +39,7 @@
 
 | 變數名稱 | 變數值 | 備註 |
 |---------|--------|-----|
-|courtesy-umbrella.database.url|jdbc:mysql://{IP}:{PORT}/sharing_economy?useSSL=false&serverTimezone=Asia/Taipei|資料庫連線字串|
+|courtesy-umbrella.database.url|jdbc:log4jdbc:mysql://{IP}:{PORT}/sharing_economy?useSSL=false&serverTimezone=Asia/Taipei|資料庫連線字串|
 |courtesy-umbrella.database.account|{username}|連線帳號|
 |courtesy-umbrella.database.password|{password}|連線密碼|
 

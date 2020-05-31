@@ -1,0 +1,50 @@
+Configuration:
+  status: error
+  name: PropertiesConfig
+  Properties:
+    Property:
+      - name: filename
+        value: courtesy-umbrella
+      - name: path
+        value: C:\log\courtesy-umbrella
+  dest: err
+  Filters:
+    ThresholdFilter:
+      level: debug
+  Appenders:
+    Console:
+      name: STDOUT
+      target: SYSTEM_OUT
+      Filters:
+        ThresholdFilter:
+          - level: info
+      PatternLayout:
+        pattern: '%d{yyyy/MM/dd HH:mm:ss}  %style{%p}{INFO=yellow} --- [%15.15t] %-40.40c{1.} : %m%n'
+    RollingFile:
+      name: RollingFile
+      Append: false
+      fileName: ${path}\${filename}.log
+      filePattern: ${path}\%d{yyyy-MM-dd}\%d{HH-mm-ss}.log
+      Filters:
+        ThresholdFilter:
+          - level: info
+      PatternLayout:
+        pattern: '%d{yyyy/MM/dd HH:mm:ss}  %style{%p}{INFO=yellow} --- [%15.15t] %-40.40c{1.} : %m%n'
+      Policies:
+        SizeBasedTriggeringPolicy:
+          size: 128MB
+        TimeBasedTriggeringPolicy:
+          interval: 3600
+          modulate: true
+      DefaultRolloverStrategy:
+        max: 5
+  Loggers:
+    Root:
+      level: info
+      AppenderRef:
+        - ref: STDOUT
+        - ref: RollingFile
+    Logger:
+      name: log4jdbc.log4j2
+      level: info
+      additivity: false
