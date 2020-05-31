@@ -2,10 +2,10 @@ package tw.edu.ntub.imd.databaseconfig.enumerated;
 
 public enum LogRecordDevice {
     UNKNOWN("-1"),
-    POSTMAN("0"),
-    BROWSER("1"),
-    APP_BROWSER("2"),
-    APP("3");
+    POSTMAN("00"),
+    BROWSER("01"),
+    APP_BROWSER("02"),
+    APP("03");
 
     private final String device;
 

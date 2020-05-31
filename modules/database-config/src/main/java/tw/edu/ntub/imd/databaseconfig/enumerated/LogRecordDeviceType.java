@@ -2,15 +2,15 @@ package tw.edu.ntub.imd.databaseconfig.enumerated;
 
 public enum LogRecordDeviceType {
     UNKNOWN("-1"),
-    POSTMAN("0"),
-    IE("1"),
-    EDGE("2"),
-    CHROME("3"),
-    FIRE_FOX("4"),
-    SAFARI("5"),
-    OPERA("6"),
-    ANDROID("7"),
-    IOS("8");
+    POSTMAN("00"),
+    IE("01"),
+    EDGE("02"),
+    CHROME("03"),
+    FIRE_FOX("04"),
+    SAFARI("05"),
+    OPERA("06"),
+    ANDROID("07"),
+    IOS("08");
 
     private final String deviceType;
 

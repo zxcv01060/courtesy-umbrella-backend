@@ -36,10 +36,10 @@ public class LogRecord {
     private String executor;
     @Column(name = "execute_date", nullable = false)
     private LocalDateTime executeDate = LocalDateTime.now();
-    @Column(name = "device", length = 1, nullable = false)
+    @Column(name = "device", length = 2, nullable = false)
     @Convert(converter = LogRecordDeviceConverter.class)
     private LogRecordDevice device;
-    @Column(name = "device_type", length = 1, nullable = false)
+    @Column(name = "device_type", length = 2, nullable = false)
     @Convert(converter = LogRecordDeviceTypeConverter.class)
     private LogRecordDeviceType deviceType;
     @Column(name = "device_version", length = 100, nullable = false)

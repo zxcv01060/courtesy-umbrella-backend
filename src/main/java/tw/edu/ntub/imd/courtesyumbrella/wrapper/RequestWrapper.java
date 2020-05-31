@@ -26,7 +26,9 @@ public class RequestWrapper {
     }
 
     public LogRecordDevice getDevice() {
-        if (originUserAgent.startsWith("Postman")) {
+        if (originUserAgent == null) {
+            return LogRecordDevice.UNKNOWN;
+        } else if (originUserAgent.startsWith("Postman")) {
             return LogRecordDevice.POSTMAN;
         }
         Browser browser = userAgent.getBrowser();
@@ -44,7 +46,9 @@ public class RequestWrapper {
     }
 
     public LogRecordDeviceType getDeviceType() {
-        if (originUserAgent.startsWith("Postman")) {
+        if (originUserAgent == null) {
+            return LogRecordDeviceType.UNKNOWN;
+        } else if (originUserAgent.startsWith("Postman")) {
             return LogRecordDeviceType.POSTMAN;
         }
         Browser browser = userAgent.getBrowser();
@@ -68,7 +72,9 @@ public class RequestWrapper {
     }
 
     public String getDeviceVersion() {
-        if (originUserAgent.startsWith("Postman")) {
+        if (originUserAgent == null) {
+            return "Unknown";
+        } else if (originUserAgent.startsWith("Postman")) {
             return originUserAgent.split("/")[1];
         }
         Browser browser = userAgent.getBrowser();
