@@ -48,7 +48,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private boolean isContainsToken(HttpServletRequest request) {
-        return request.getHeader("Authorization") != null && request.getHeader("Authorization")
-                .startsWith("Bearer ");
+        String authorization = request.getHeader("Authorization");
+        return authorization != null && authorization.startsWith("Bearer ");
     }
 }

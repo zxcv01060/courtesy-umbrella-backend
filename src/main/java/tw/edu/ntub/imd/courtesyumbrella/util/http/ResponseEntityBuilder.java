@@ -2,6 +2,7 @@ package tw.edu.ntub.imd.courtesyumbrella.util.http;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import tw.edu.ntub.imd.birc.common.dto.CodeEntry;
 import tw.edu.ntub.imd.birc.common.exception.ProjectException;
@@ -29,14 +30,15 @@ import java.util.function.BiConsumer;
  * }
  */
 public class ResponseEntityBuilder {
-    private final ResponseEntity.BodyBuilder bodyBuilder = ResponseEntity.ok();
+    private ResponseEntity.BodyBuilder bodyBuilder;
     private boolean success;
     private ProjectException ProjectException;
     private String message;
     private ResponseData responseData;
 
-    private ResponseEntityBuilder(ProjectException ProjectException) {
+    private ResponseEntityBuilder(ResponseEntity.BodyBuilder bodyBuilder, ProjectException ProjectException) {
         this(false);
+        this.bodyBuilder = bodyBuilder;
         this.ProjectException = ProjectException;
         this.message = ProjectException.getMessage();
     }
@@ -53,9 +55,13 @@ public class ResponseEntityBuilder {
         return new ResponseEntityBuilder(false);
     }
 
-    public static ResponseEntityBuilder error(@Nonnull ProjectException ProjectException) {
-        ProjectException.printStackTrace();
-        return new ResponseEntityBuilder(ProjectException);
+    public static ResponseEntityBuilder error(@Nonnull ProjectException projectException) {
+        return error(HttpStatus.OK, projectException);
+    }
+
+    public static ResponseEntityBuilder error(@Nonnull HttpStatus status, @Nonnull ProjectException projectException) {
+        projectException.printStackTrace();
+        return new ResponseEntityBuilder(ResponseEntity.status(status), projectException);
     }
 
     public ResponseEntityBuilder result(boolean isSuccess) {
@@ -121,9 +127,9 @@ public class ResponseEntityBuilder {
                     .add("errorCode", ProjectException != null ? ProjectException.getErrorCode() : "")
                     .add("message", message)
                     .replace("data",
-                             responseData != null ?
-                                     responseData.getData() :
-                                     new ObjectData().getData()
+                            responseData != null ?
+                                    responseData.getData() :
+                                    new ObjectData().getData()
                     );
             String body = ResponseUtils.createMapper()
                     .writeValueAsString(result.getData());
