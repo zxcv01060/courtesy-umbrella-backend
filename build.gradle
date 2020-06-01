@@ -1,11 +1,11 @@
 plugins {
-    id 'org.springframework.boot' version '2.2.6.RELEASE'
+    id 'org.springframework.boot' version '2.3.0.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
 }
 
 group = 'tw.edu.ntub.imd'
-version = '1.0.3'
+version = '1.0.4'
 sourceCompatibility = '11'
 
 configurations {
@@ -68,7 +68,7 @@ subprojects {
 
     dependencyManagement {
         imports {
-            mavenBom("org.springframework.boot:spring-boot-dependencies:2.2.6.RELEASE")
+            mavenBom("org.springframework.boot:spring-boot-dependencies:2.3.0.RELEASE")
         }
     }
 
@@ -84,6 +84,7 @@ dependencies {
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     implementation 'org.yaml:snakeyaml:1.26'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
