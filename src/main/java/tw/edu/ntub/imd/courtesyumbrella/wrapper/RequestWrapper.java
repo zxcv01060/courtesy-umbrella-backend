@@ -79,6 +79,9 @@ public class RequestWrapper {
         }
         Browser browser = userAgent.getBrowser();
         Version browserVersion = browser.getVersion(originUserAgent);
+        if (browserVersion == null) {
+            return "Unknown";
+        }
         return browserVersion.getVersion();
     }
 }
