@@ -35,7 +35,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserDAO, User, String, User
             User user = transformer.transferToEntity(userBean);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setModifyId(user.getAccount());
-            user.setSave(true);
             user = userDAO.saveAndFlush(user);
             userBean.setPassword(user.getPassword());
             userBean.setCreateDate(user.getCreateDate());

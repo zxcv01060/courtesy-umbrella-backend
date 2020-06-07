@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "log_record", schema = Config.DATABASE_NAME)
 @SuppressWarnings("unused")
-public class LogRecord {
+public class LogRecord implements Savable<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -71,5 +71,15 @@ public class LogRecord {
         if (userByExecutor != null) {
             executor = userByExecutor.getAccount();
         }
+    }
+
+    @Override
+    public void setNew(boolean isNew) {
+
+    }
+
+    @Override
+    public boolean isNew() {
+        return true;
     }
 }

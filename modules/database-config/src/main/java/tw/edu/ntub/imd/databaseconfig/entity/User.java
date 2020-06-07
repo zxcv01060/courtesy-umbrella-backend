@@ -3,12 +3,12 @@ package tw.edu.ntub.imd.databaseconfig.entity;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import org.springframework.data.domain.Persistable;
+import lombok.Setter;
 import tw.edu.ntub.imd.birc.common.annotation.CopyIgnore;
 import tw.edu.ntub.imd.databaseconfig.Config;
 import tw.edu.ntub.imd.databaseconfig.converter.BooleanTo1And0Converter;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,10 +18,10 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "user", schema = Config.DATABASE_NAME)
 @SuppressWarnings("unused")
-public class User implements Persistable<String> {
-    @Transient
+public class User implements Savable<String> {
     @CopyIgnore
-    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    @Transient
     private boolean save;
     @Id
     @Column(name = "account", length = 100, nullable = false)
@@ -58,9 +58,15 @@ public class User implements Persistable<String> {
         }
     }
 
+    @Nullable
     @Override
     public String getId() {
         return account;
+    }
+
+    @Override
+    public void setNew(boolean isNew) {
+        save = isNew;
     }
 
     @Override
